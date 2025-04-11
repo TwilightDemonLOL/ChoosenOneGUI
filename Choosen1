@@ -1,0 +1,469 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/deeeity/mercury-lib/master/src.lua"))()
+local MainChannel = game.TextChatService.TextChannels.RBXGeneral
+local offendingPosition = Vector3.new( 0, -3.4028234663852886e+38, 0)
+local spawn = game.Workspace.Spawn.Position
+local function PartPos(part)
+    if part.Position == offendingPosition then
+        return true
+    else
+        return false
+    end
+end
+_G.NameLessRan = false
+local Main = lib:Create{
+    Name = "The Choosen One, by FPD",
+    Size =  UDim2.fromOffset(600, 400),
+    Theme = lib.Themes.Rust
+}
+
+local scriptTab = Main:Tab{
+    Name = "Scripts",
+    Icon = nil
+}
+local AntiTab = Main:Tab{
+    Name = "Preventions",
+    Icon = nil
+}
+local miscellaneous = Main:Tab{
+    Name = "Misc Scripts",
+    Icon = nil
+}
+Main:Credit{
+    Name = "Made by FPD, on discord",
+    Description = "I suck at coding this is my first script lol",
+    V3rm = nil,
+    Discord = "TwilightDemonLOL#4608"
+}
+scriptTab:Button{
+    Name = "Infinite Yield",
+    Description = "Run Infinite Yield, made by Edge // Zwolf // Moon // Hunter // Toon // Peyton",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    end
+}
+scriptTab:Button{
+    Name = "Nameless Admin",
+    Description = "Run Nameless Admin, Made by @Itseverydayyou (github) and @MuhXd (github)",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/FilteringEnabled/NamelessAdmin/main/Source'))()
+    end
+}
+scriptTab:Button{
+    Name = "Energizer Animations",
+    Description = "Resets on death or respawn",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/IlikeyocutgHAH12/FEEGGEG/refs/heads/main/%5BFE%5D%20Energize%20Animation%20Gui.txt'))()
+    end
+}
+scriptTab:Button{
+    Name = "Gravity Gun",
+    Description = "Gives you a gravity gun to control unanchored parts",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/qipurblx/Script/main/Gravity%20Gun"))()
+    end
+}
+AntiTab:Toggle{
+    Name = "AntiJail",
+    StartingState = false,
+    Description = "Prevent any and all attempts to jail you",
+    Callback = function(state)
+        _G.Antijail = state
+        while _G.Antijail do
+            if game.Players.LocalPlayer.Character:FindFirstChild("Jail") then
+                game.Players.LocalPlayer.Character.Jail:Destroy()
+            end
+        wait(0.1)
+        end
+    end
+}
+
+AntiTab:Toggle{
+    Name = "Auto Enlighten",
+    StartingState = true,
+    Description = "Automaticly Executes permenant enlighten bug when possible",
+    Callback = function(state)
+        _G.AutoEnl = state
+        while _G.AutoEnl do
+            if game.Players.LocalPlayer.Character:FindFirstChild("The Arkenstone") then
+                MainChannel:SendAsync("reset")
+            end
+        task.wait()
+        end
+    end
+}
+
+AntiTab:Toggle{
+    Name = "Secondary AutoEnlighten",
+    StartingState = false,
+    Description = "if enlighten is unequiped in your inventory executes permenant enlighten",
+    Callback = function(state)
+        _G.SecondaryEnl = state
+        while _G.SecondaryEnl do
+            if game.Players.LocalPlayer.Backpack:FindFirstChild("The Arkenstone") then
+                game.Players.LocalPlayer.Backpack:FindFirstChild("The Arkenstone").Parent = game.Players.LocalPlayer.Character
+                MainChannel:SendAsync("reset")
+            end
+        task.wait()
+        end
+    end
+}
+
+AntiTab:Toggle{
+    Name = "AutoR6",
+    StartingState = false,
+    Description = "Automaticly puts your character into R6 if your ever R15",
+    Callback = function(state)
+        _G.AutoR6 = state
+        while _G.AutoR6 do
+            if game.Players.LocalPlayer.Character:FindFirstChild("LowerTorso") then
+                MainChannel:SendAsync("r6")
+            end
+        wait(0.1)
+        end
+    end
+}
+
+AntiTab:Toggle{
+    Name = "Always Day",
+    StartingState = false,
+    Description = "Makes It always day",
+    Callback = function(state)
+        _G.AlwaysDay = state
+        while _G.AlwaysDay do
+            game.Lighting.TimeOfDay = "14:00:00"
+            wait(0.1)
+        end
+    end
+}
+AntiTab:Toggle{
+    Name = "AntiFreeze (Non-Enlighten)",
+    StartingState = false,
+    Description = "Uses the NonEnlighten Method of removing freeze",
+    Callback = function(state)
+        _G.AntifreezeNoenl = state
+        while _G.AntifreezeNoenl do
+            if game.Players.LocalPlayer.Character:FindFirstChild("Hielo") then
+                game.Players.LocalPlayer.Character.Humanoid.Health = 0
+            end
+            wait(0.1)
+        end
+    end
+}
+
+AntiTab:Toggle{
+    Name = "AntiFreeze (Enlighten Method)",
+    StartingState = false,
+    Description = "Use the Enlighten Method of removing freeze",
+    Callback = function(state)
+        _G.AntifreezeEnl = state
+        while _G.AntifreezeEnl do
+            if game.Players.LocalPlayer.Character:FindFirstChild("Hielo") then
+                MainChannel:SendAsync("unfreeze")
+            end
+            wait(0.1)
+        end
+    end
+}
+AntiTab:Toggle{
+    Name = "AntiToxicBlock",
+    StartingState = true,
+    Description = "Prevents you from being killed by toxic blocks",
+    Callback = function(state)
+        _G.ToxicBlock = state
+        while _G.ToxicBlock do
+            local player = game:GetService("Players").LocalPlayer
+            local UIS = game:GetService("UserInputService")
+            local myzaza = false
+            
+            UIS.InputBegan:Connect(function(input, GPE)
+            if GPE then return end
+            myzaza = not myzaza
+            end)
+            
+            local parts = workspace:GetPartBoundsInRadius(player.Character:WaitForChild("HumanoidRootPart").Position, 10)
+            for _, part in ipairs(parts) do
+            part.CanTouch = myzaza
+            end
+            task.wait(0.1)
+        end
+    end
+}
+miscellaneous:Button{
+    Name = "Remove Lighting Effects",
+    Description = "Removing Annoying lighting effects like blind and myopic on the Client",
+    Callback = function()
+        game.Lighting.Blur:Destroy()
+        game.Players.LocalPlayer.PlayerGui.Blind:Destroy()
+        game.StarterGui.Blind:Destroy()
+        game.Lighting.Fog:Destroy()
+    end
+}
+
+miscellaneous:Button{
+    Name = "Clear All Enlightens",
+    Description = "Remove enlighten from ALL players",
+    Callback = function()
+        MainChannel:SendAsync(";enlighten others")
+        wait(0.2)
+        MainChannel:SendAsync(";clearinv others")
+        wait(0.2)
+        MainChannel:SendAsync(";clearinv others")
+        wait(0.2)
+        MainChannel:SendAsync(";clearinv others")
+        wait(0.2)
+        MainChannel:SendAsync(";clearinv others")
+        wait(0.2)
+        MainChannel:SendAsync(";clearinv others")
+    end
+}
+miscellaneous:Textbox{
+    Name = "Clear Enlighten Name",
+    Callback = function(text)
+        _G.ClrEnlName = text
+    end
+}
+miscellaneous:Button{
+    Name = "Specific Clear Enlighte",
+    Description = "Clears enlighten from one specific player",
+    Callback = function()
+        MainChannel:SendAsync("enlighten" .. " " .. _G.ClearEnlName)
+        wait(0.2)
+        MainChannel:SendAsync("clearinv" .. " " .. _G.ClearEnlName)
+        wait(0.2)
+        MainChannel:SendAsync("clearinv" .. " " .. _G.ClearEnlName)
+        wait(0.2)
+        MainChannel:SendAsync("clearinv" .. " " .. _G.ClearEnlName)
+    end
+}
+miscellaneous:Button{
+    Name = "Full Map Reset (DOES NOT DELCUBES)",
+    Description = "Fully Resets map WITHOUT delcubes",
+    Callback = function()
+        MainChannel:SendAsync(";maptide 9e9")
+        wait(0.2)
+        MainChannel:SendAsync(";mapnoise 0")
+        wait(0.2)
+        MainChannel:SendAsync(";seatide 0")
+        wait(0.2)
+        MainChannel:SendAsync(";spring")
+        wait(0.2)
+    end
+}
+miscellaneous:Button{
+    Name = "Full Lighting Reset",
+    Description = "Fully resets ALL aspects of lighting",
+    Callback = function()
+        MainChannel:SendAsync(";clouds 0")
+        wait(0.2)
+        MainChannel:SendAsync(";fog 0")
+        wait(0.2)
+        MainChannel:SendAsync(";unmyopic all")
+        wait(0.2)
+        MainChannel:SendAsync(";unblind all")
+        wait(0.2)
+        MainChannel:SendAsync(";uncurse all")
+        wait(0.2)
+        MainChannel:SendAsync(";time")
+        wait(0.2)
+    end
+}
+
+miscellaneous:Button{
+    Name = "Full server reset",
+    Description = "FULLY RESETS ALL ASPECTS OF THE SERVER",
+    Callback = function()
+        MainChannel:SendAsync("INITIATING A FULL SERVER RESET IN 3 SECONDS")
+        wait(3)
+        MainChannel:SendAsync(";delcubes all")
+        wait(0.5)
+        MainChannel:SendAsync(";clouds 0")
+        wait(0.5)
+        MainChannel:SendAsync(";fog 0")
+        wait(0.5)
+        MainChannel:SendAsync(";uncurse all")
+        wait(0.5)
+        MainChannel:SendAsync(";unblind all")
+        wait(0.5)
+        MainChannel:SendAsync(";unfreeze all")
+        wait(0.5)
+        MainChannel:SendAsync(";day")
+        wait(0.5)
+        MainChannel:SendAsync(";unmyopic all")
+        wait(0.5)
+        MainChannel:SendAsync(";seatide 0")
+        wait(0.5)
+        MainChannel:SendAsync(";maptide 9e9")
+        wait(0.5)
+        MainChannel:SendAsync(";mapnoise 0")
+        wait(0.5)
+        MainChannel:SendAsync(";spring")
+        wait(0.5)
+        MainChannel:SendAsync(";unmute all")
+        wait(0.5)
+        MainChannel:SendAsync("colorful")
+        wait(0.5)
+        MainChannel:SendAsync(";enlighten others")
+        wait(0.5)
+        MainChannel:SendAsync(";clearinv others")
+        wait(0.5)
+        MainChannel:SendAsync(";clearinv others")
+        wait(0.5)
+        MainChannel:SendAsync(";clearinv others")
+        wait(0.5)
+        MainChannel:SendAsync(";clearinv others")
+        wait(0.5)
+        MainChannel:SendAsync(";clearinv others")
+        wait(0.5)
+        MainChannel:SendAsync(";clearinv others")
+        wait(0.5)
+        MainChannel:SendAsync(";reset all")
+    end
+}
+
+miscellaneous:Toggle{
+    Name = "Flood Chat",
+    StartingState = false,
+    Description = "Flood Chat USE THE TEXTBOX BELOW",
+    Callback = function(state)
+        _G.Spamming = state
+        while _G.Spamming and task.wait(0.1) do
+            MainChannel:SendAsync(_G.SpamMessage)
+        end
+    end
+}
+miscellaneous:Textbox{
+    Name = "Chatspam message",
+    Callback = function(text)
+        _G.SpamMessage = text
+    end
+}
+
+miscellaneous:Dropdown{
+    Name = "Item Codes",
+    StartingText = "Select Item",
+    Description = "Select an item from the selection (ALL ITEMS ONLY WORK IN R6)",
+    Items = {
+        "Scroll of Sevenless",
+        "Ivory Peristron",
+	    "Crimson Peristron",
+        "Noir Peristron",
+        "Omega Peristron",
+        "Chartreuse Peristron",
+        "Azure Peristron",
+        "Amythest Peristron",
+        "Grimgold Peristron",
+        "Joyful Peristron",
+        "Festive Peristron",
+        "Vampire Vanquisher Sword",
+        "Winters Greatsword",
+        "Blow Dryer",
+        "Triple LaserGun",
+        "Subspace Tripmine",
+        "Sledge Hammer",
+        "Azure Dragon Sword",
+        "Timestop Dagger",
+        "Ban Hammer (no it doesnt actually ban)",
+        "Corrupted Heart (Causes BIG explosion)",
+    },
+    Callback = function(item)
+        if item == "Scroll of Sevenless" then
+            MainChannel:SendAsync("gear me 125013830")
+        elseif item == "Ivory Peristron" then
+            MainChannel:SendAsync("gear me 108158379")
+	    elseif item == "Crimson Peristron" then
+            MainChannel:SendAsync("gear me 99119240")
+        elseif item == "Noir Peristron" then
+            MainChannel:SendAsync("gear me 120307951")
+        elseif item == "Omega Peristron" then
+            MainChannel:SendAsync("gear me 159229806")
+        elseif item == "Chartreuse Peristron" then
+            MainChannel:SendAsync("gear me 80661504")
+        elseif item == "Azure Peristron" then
+            MainChannel:SendAsync("gear me 69499437")
+        elseif item == "Amythest Peristron" then
+            MainChannel:SendAsync("gear me 93136802")
+        elseif item == "Grimgold Peristron" then
+            MainChannel:SendAsync("gear me 73829193")
+        elseif item == "Joyful Peristron" then
+            MainChannel:SendAsync("gear me 233520257")
+        elseif item == "Festive Peristron" then
+            MainChannel:SendAsync("gear me 139577901")
+        elseif item == "Vampire Vanquisher Sword" then
+            MainChannel:SendAsync("gear me 94794847")
+        elseif item == "Winters Greatsword" then
+            MainChannel:SendAsync("gear me 261439002")
+        elseif item == "Blow Dryer" then
+            MainChannel:SendAsync("gear me 11719016")
+        elseif item == "Triple LaserGun" then
+            MainChannel:SendAsync("gear me 139578207")
+        elseif item == "Subspace Tripmine" then
+            MainChannel:SendAsync("gear me 11999247")
+        elseif item == "Sledge Hammer" then
+            MainChannel:SendAsync("gear me 45177979")
+        elseif item == "Azure Dragon Sword" then
+            MainChannel:SendAsync("gear me 268586231")
+        elseif item == "Timestop Dagger" then
+            MainChannel:SendAsync("gear me 71037101")
+        elseif item == "Ban Hammer (no it doesnt actually ban)" then
+            MainChannel:SendAsync("gear me 10468797")
+        elseif item == "Corrupted Heart (Causes BIG explosion)" then
+            MainChannel:SendAsync("gear me 178076989")
+        end
+    end
+}
+miscellaneous:Textbox{
+    Name = "Player Lock/Unlock",
+    Callback = function(text)
+        _G.LockUnlockName = text
+    end
+}
+miscellaneous:Button{
+    Name = "Player Full Lock",
+    Description = "Fully Locks a player",
+    Callback = function()
+        MainChannel:SendAsync("mute" .. " " .. _G.LockUnlockName)
+        wait(0.2)
+        MainChannel:SendAsync("freeze" .. " " .. _G.LockUnlockName)
+        wait(0.2)
+        MainChannel:SendAsync("glitch" .. " " .. _G.LockUnlockName)
+        wait(0.2)
+        MainChannel:SendAsync("jail" .. " " .. _G.LockUnlockName)
+        wait(0.2)
+        MainChannel:SendAsync("blind" .. " " .. _G.LockUnlockName)
+        wait(0.2)
+        MainChannel:SendAsync("myopic" .. " " .. _G.LockUnlockName)
+    end
+}
+miscellaneous:Button{
+    Name = "Player Full Unlock",
+    Description = "Fully Unlocks a player",
+    Callback = function()
+        MainChannel:SendAsync("reset" .. " " .. _G.LockUnlockName)
+        wait(0.3)
+        MainChannel:SendAsync("unmute" .. " " .. _G.LockUnlockName)
+        wait(0.3)
+        MainChannel:SendAsync("unmyopic" .. " " .. _G.LockUnlockName)
+        wait(0.3)
+        MainChannel:SendAsync("unblind" .. " " .. _G.LockUnlockName)
+    end
+}
+
+miscellaneous:Button{
+    Name = "Bugspawn",
+    Description = "Breaks spawn",
+    Callback = function()
+        MainChannel:SendAsync(";Maptide NaN")
+        task.wait(0.5)
+        MainChannel:SendAsync(";reset others")
+    end
+}
+
+miscellaneous:Button{
+    Name = "Fix Spawn",
+    Description = "Reverses Bugspawn",
+    Callback = function()
+        MainChannel:SendAsync(";Maptide 9e9")
+        task.wait(0.5)
+        MainChannel:SendAsync(";Reset all")
+    end
+}
