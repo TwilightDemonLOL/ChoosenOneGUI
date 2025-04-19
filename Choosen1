@@ -85,7 +85,7 @@ AntiTab:Toggle{
         _G.AutoEnl = state
         while _G.AutoEnl do
             if game.Players.LocalPlayer.Character:FindFirstChild("The Arkenstone") then
-                MainChannel:SendAsync("reset")
+                MainChannel:SendAsync(";reset")
             end
         task.wait()
         end
@@ -101,7 +101,7 @@ AntiTab:Toggle{
         while _G.SecondaryEnl do
             if game.Players.LocalPlayer.Backpack:FindFirstChild("The Arkenstone") then
                 game.Players.LocalPlayer.Backpack:FindFirstChild("The Arkenstone").Parent = game.Players.LocalPlayer.Character
-                MainChannel:SendAsync("reset")
+                MainChannel:SendAsync(";reset")
             end
         task.wait()
         end
@@ -116,7 +116,7 @@ AntiTab:Toggle{
         _G.AutoR6 = state
         while _G.AutoR6 do
             if game.Players.LocalPlayer.Character:FindFirstChild("LowerTorso") then
-                MainChannel:SendAsync("r6")
+                MainChannel:SendAsync(";r6")
             end
         wait(0.1)
         end
@@ -158,7 +158,7 @@ AntiTab:Toggle{
         _G.AntifreezeEnl = state
         while _G.AntifreezeEnl do
             if game.Players.LocalPlayer.Character:FindFirstChild("Hielo") then
-                MainChannel:SendAsync("unfreeze")
+                MainChannel:SendAsync(";unfreeze")
             end
             wait(0.1)
         end
@@ -226,13 +226,13 @@ miscellaneous:Button{
     Name = "Specific Clear Enlighte",
     Description = "Clears enlighten from one specific player",
     Callback = function()
-        MainChannel:SendAsync("enlighten" .. " " .. _G.ClearEnlName)
+        MainChannel:SendAsync(";enlighten" .. " " .. _G.ClearEnlName)
         wait(0.2)
-        MainChannel:SendAsync("clearinv" .. " " .. _G.ClearEnlName)
+        MainChannel:SendAsync(";clearinv" .. " " .. _G.ClearEnlName)
         wait(0.2)
-        MainChannel:SendAsync("clearinv" .. " " .. _G.ClearEnlName)
+        MainChannel:SendAsync(";clearinv" .. " " .. _G.ClearEnlName)
         wait(0.2)
-        MainChannel:SendAsync("clearinv" .. " " .. _G.ClearEnlName)
+        MainChannel:SendAsync(";clearinv" .. " " .. _G.ClearEnlName)
     end
 }
 miscellaneous:Button{
@@ -367,47 +367,47 @@ miscellaneous:Dropdown{
     },
     Callback = function(item)
         if item == "Scroll of Sevenless" then
-            MainChannel:SendAsync("gear me 125013830")
+            MainChannel:SendAsync(";gear me 125013830")
         elseif item == "Ivory Peristron" then
-            MainChannel:SendAsync("gear me 108158379")
+            MainChannel:SendAsync(";gear me 108158379")
 	    elseif item == "Crimson Peristron" then
-            MainChannel:SendAsync("gear me 99119240")
+            MainChannel:SendAsync(";gear me 99119240")
         elseif item == "Noir Peristron" then
-            MainChannel:SendAsync("gear me 120307951")
+            MainChannel:SendAsync(";gear me 120307951")
         elseif item == "Omega Peristron" then
-            MainChannel:SendAsync("gear me 159229806")
+            MainChannel:SendAsync(";gear me 159229806")
         elseif item == "Chartreuse Peristron" then
-            MainChannel:SendAsync("gear me 80661504")
+            MainChannel:SendAsync(";gear me 80661504")
         elseif item == "Azure Peristron" then
-            MainChannel:SendAsync("gear me 69499437")
+            MainChannel:SendAsync(";gear me 69499437")
         elseif item == "Amythest Peristron" then
-            MainChannel:SendAsync("gear me 93136802")
+            MainChannel:SendAsync(";gear me 93136802")
         elseif item == "Grimgold Peristron" then
-            MainChannel:SendAsync("gear me 73829193")
+            MainChannel:SendAsync(";gear me 73829193")
         elseif item == "Joyful Peristron" then
-            MainChannel:SendAsync("gear me 233520257")
+            MainChannel:SendAsync(";gear me 233520257")
         elseif item == "Festive Peristron" then
-            MainChannel:SendAsync("gear me 139577901")
+            MainChannel:SendAsync(";gear me 139577901")
         elseif item == "Vampire Vanquisher Sword" then
-            MainChannel:SendAsync("gear me 94794847")
+            MainChannel:SendAsync(";gear me 94794847")
         elseif item == "Winters Greatsword" then
-            MainChannel:SendAsync("gear me 261439002")
+            MainChannel:SendAsync(";gear me 261439002")
         elseif item == "Blow Dryer" then
-            MainChannel:SendAsync("gear me 11719016")
+            MainChannel:SendAsync(";gear me 11719016")
         elseif item == "Triple LaserGun" then
-            MainChannel:SendAsync("gear me 139578207")
+            MainChannel:SendAsync(";gear me 139578207")
         elseif item == "Subspace Tripmine" then
-            MainChannel:SendAsync("gear me 11999247")
+            MainChannel:SendAsync(";gear me 11999247")
         elseif item == "Sledge Hammer" then
-            MainChannel:SendAsync("gear me 45177979")
+            MainChannel:SendAsync(";gear me 45177979")
         elseif item == "Azure Dragon Sword" then
-            MainChannel:SendAsync("gear me 268586231")
+            MainChannel:SendAsync(";gear me 268586231")
         elseif item == "Timestop Dagger" then
-            MainChannel:SendAsync("gear me 71037101")
+            MainChannel:SendAsync(";gear me 71037101")
         elseif item == "Ban Hammer (no it doesnt actually ban)" then
-            MainChannel:SendAsync("gear me 10468797")
+            MainChannel:SendAsync(";gear me 10468797")
         elseif item == "Corrupted Heart (Causes BIG explosion)" then
-            MainChannel:SendAsync("gear me 178076989")
+            MainChannel:SendAsync(";gear me 178076989")
         end
     end
 }
@@ -421,30 +421,30 @@ miscellaneous:Button{
     Name = "Player Full Lock",
     Description = "Fully Locks a player",
     Callback = function()
-        MainChannel:SendAsync("mute" .. " " .. _G.LockUnlockName)
+        MainChannel:SendAsync(";mute" .. " " .. _G.LockUnlockName)
         wait(0.2)
-        MainChannel:SendAsync("freeze" .. " " .. _G.LockUnlockName)
+        MainChannel:SendAsync(";freeze" .. " " .. _G.LockUnlockName)
         wait(0.2)
-        MainChannel:SendAsync("glitch" .. " " .. _G.LockUnlockName)
+        MainChannel:SendAsync(";glitch" .. " " .. _G.LockUnlockName)
         wait(0.2)
-        MainChannel:SendAsync("jail" .. " " .. _G.LockUnlockName)
+        MainChannel:SendAsync(";jail" .. " " .. _G.LockUnlockName)
         wait(0.2)
-        MainChannel:SendAsync("blind" .. " " .. _G.LockUnlockName)
+        MainChannel:SendAsync(";blind" .. " " .. _G.LockUnlockName)
         wait(0.2)
-        MainChannel:SendAsync("myopic" .. " " .. _G.LockUnlockName)
+        MainChannel:SendAsync(";myopic" .. " " .. _G.LockUnlockName)
     end
 }
 miscellaneous:Button{
     Name = "Player Full Unlock",
     Description = "Fully Unlocks a player",
     Callback = function()
-        MainChannel:SendAsync("reset" .. " " .. _G.LockUnlockName)
+        MainChannel:SendAsync(";reset" .. " " .. _G.LockUnlockName)
         wait(0.3)
-        MainChannel:SendAsync("unmute" .. " " .. _G.LockUnlockName)
+        MainChannel:SendAsync(";unmute" .. " " .. _G.LockUnlockName)
         wait(0.3)
-        MainChannel:SendAsync("unmyopic" .. " " .. _G.LockUnlockName)
+        MainChannel:SendAsync(";unmyopic" .. " " .. _G.LockUnlockName)
         wait(0.3)
-        MainChannel:SendAsync("unblind" .. " " .. _G.LockUnlockName)
+        MainChannel:SendAsync(";unblind" .. " " .. _G.LockUnlockName)
     end
 }
 
