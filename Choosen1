@@ -479,6 +479,7 @@ morphs:Button{
     Description = "Turns you blank",
     Callback = function()
         MainChannel:SendAsync(";morph me Blank")
+    end
 }
 morphs:Button{
     Name = "Tiger Shark",
@@ -617,6 +618,7 @@ morphs:Button{
         MainChannel:SendAsync(";wear 118948917431511")
         wait(morphWait)
         MainChannel:SendAsync(";wear 117094001435092")
+    end
 }
 
 morphs:Button{
@@ -636,4 +638,5 @@ morphs:Button{
         MainChannel:SendAsync(";wear 17718253134")
         wait(morphWait)
         MainChannel:SendAsync(";wear 17718248655")
+    end
 }
