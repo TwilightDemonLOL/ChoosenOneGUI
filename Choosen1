@@ -1,6 +1,7 @@
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/deeeity/mercury-lib/master/src.lua"))()
 local MainChannel = game.TextChatService.TextChannels.RBXGeneral
 local offendingPosition = Vector3.new( 0, -3.4028234663852886e+38, 0)
+local morphWait = 0.4
 local spawn = game.Workspace.Spawn.Position
 local function PartPos(part)
     if part.Position == offendingPosition then
@@ -27,6 +28,11 @@ local AntiTab = Main:Tab{
 local miscellaneous = Main:Tab{
     Name = "Misc Scripts",
     Icon = nil
+}
+local morphs = Main:Tab{
+    Name = "Morphs Tab",
+    Icon = nil
+
 }
 Main:Credit{
     Name = "Made by FPD, on discord",
@@ -466,4 +472,168 @@ miscellaneous:Button{
         task.wait(0.5)
         MainChannel:SendAsync(";Reset all")
     end
+}
+
+morphs:Button{
+    Name = "Blank",
+    Description = "Turns you blank",
+    Callback = function()
+        MainChannel:SendAsync(";morph me Blank")
+}
+morphs:Button{
+    Name = "Tiger Shark",
+    Description = "Morphs you into a tiger shark",
+    Callback = function()
+        MainChannel:SendAsync(";morph me Blank")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 17649531118")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 17636708724")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 17649513846")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 88464072723276")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 15291413794")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 15291386940")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 15291386940")
+        wait(morphWait)
+        MainChannel:SendAsync("Name me TigerShark")
+    end
+}
+
+morphs:Button{
+    Name = "Sand Shark",
+    Description = "Morphs you into a sand shark",
+    Callback = function()
+        MainChannel:SendAsync(";morph me Blank")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 18112627731")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 18112648974")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 18112653888")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 18112632794")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 8912762012")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 8912766688")
+        wait(morphWait)
+        MainChannel:SendAsync(";Name me SandShark")
+    end
+}
+
+morphs:Button{
+    Name = "Kawaii Shark",
+    Description = "Morphs you into a Pink Tiger Shark",
+    Callback = function()
+        MainChannel:SendAsync(";morph me blank")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 18112587957")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 18112607940")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 17532055478")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 18112587957")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 13369529179")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 18112612824")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 6328302835")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 6328543213")
+        wait(morphWait)
+        MainChannel:SendAsync(";name me KawaiiShark")
+    end
+}
+
+morphs:Button{
+    Name = "Cone Shark",
+    Description = "Morphs you into a Traffic Cone Shark",
+    Callback = function()
+        MainChannel:SendAsync(";morph me blank")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 113522909306924")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 109180592834305")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 86293764182581")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 93372255536999")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 95974462016249")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 140216773049817")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 136223225967034")
+        wait(morphWait)
+        MainChannel:SendAsync(";name me Traffic_Cone_Shark")
+    end
+}
+
+morphs:Button{
+    Name = "Demon Shark",
+    Description = "Morphs you into a demon shark",
+    Callback = function()
+        MainChannel:SendAsync(";morph me blank")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 92653248508321")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 114535411154289")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 72881417259026")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 122195589834556")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 13580749682")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 13580746328")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 13580749682")
+        wait(morphWait)
+        MainChannel:SendAsync(";Name me DemonShark")
+    end
+}
+
+morphs:Button{
+    Name = "Blue Koi",
+    Description = "Morphs you into a japanese Blue Koi"
+    Callback = function()
+        MainChannel:SendAsync(";morph me Blank")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 80945728617076")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 92493817603615")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 130550146575802")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 76892240019041")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 118948917431511")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 117094001435092")
+}
+
+morphs:Button{
+    Name = "Red Koi",
+    Description = "Morphs you into a japanese Red Koi"
+    Callback = function()
+        MainChannel:SendAsync(";morph me Blank")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 17701457534")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 17701452014")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 17701439976")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 17701432554")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 17718253134")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear 17718248655")
 }
