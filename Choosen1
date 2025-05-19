@@ -1,7 +1,14 @@
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/deeeity/mercury-lib/master/src.lua"))()
+getgenv().AntiVoid = true
 local MainChannel = game.TextChatService.TextChannels.RBXGeneral
+_G.MorphTarget = "me"
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 local offendingPosition = Vector3.new( 0, -3.4028234663852886e+38, 0)
 local morphWait = 0.4
+local Breaker = {"clearinv", "mute", "myopic", "curse", "time", "freeze",}
+local LightingBreaker = {"time", "colorless", "colorful"}
+local ChaosClear = {";enlighten others", ";clearinv others"}
 local spawn = game.Workspace.Spawn.Position
 local function PartPos(part)
     if part.Position == offendingPosition then
@@ -9,6 +16,38 @@ local function PartPos(part)
     else
         return false
     end
+end
+local function toolMatch(Handle)
+    local allPlayers = Players:GetPlayers()
+    for i = 1, #allPlayers do
+        local Player = allPlayers[i]
+        if (Player == LocalPlayer) then continue end
+        local Character = Player.Character
+        local RightArm = Character:WaitForChild("Right Arm")
+        local RightGrip = RightArm:FindFirstChild("RightGrip")
+        if (RightGrip and RightGrip.Part1 == Handle) then
+            return Player
+        end
+    end
+end
+local function onCharacter(Character)
+    local RightArm = Character:WaitForChild("Right Arm")
+
+    RightArm.ChildAdded:Connect(function(child)
+        if (child:IsA("Weld") and child.Name == "RightGrip" and getgenv().AntiVoid) then
+            -- // Vars
+            local ConnectedHandle = child.Part1
+
+            -- // Check if someone else has something equipped too with the same handle as you
+            local matched = toolMatch(ConnectedHandle)
+
+            -- // Destroy the tool, if someone is voiding you
+            if (matched) then
+                ConnectedHandle.Parent:Destroy()
+                print(matched, "just tried to void you lol!")
+            end
+        end
+    end)
 end
 _G.NameLessRan = false
 local Main = lib:Create{
@@ -62,10 +101,31 @@ scriptTab:Button{
     end
 }
 scriptTab:Button{
+    Name = "Kawaii Aura",
+    Description = "Unanchored parts orbit",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/hellohellohell012321/KAWAII-AURA/main/kawaii_aura.lua'))()
+    end
+}
+scriptTab:Button{
+    Name = "Jerk off",
+    Description = "R6 only",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastefy.app/wa3v2Vgm/raw"))
+    end
+}
+scriptTab:Button{
     Name = "Gravity Gun",
     Description = "Gives you a gravity gun to control unanchored parts",
     Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/qipurblx/Script/main/Gravity%20Gun"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/sinret/rbxscript.com-scripts-reuploads-/main/sagtdfhsdfgujh", true))()
+    end
+}
+scriptTab:Button{
+    Name = "Punch",
+    Description = "Gives you a fling punch tool",
+    Callback = function()
+        loadstring(game:HttpGet(('http://pastefy.app/GvnHVjT5/raw'),true))()
     end
 }
 AntiTab:Toggle{
@@ -194,6 +254,7 @@ AntiTab:Toggle{
         end
     end
 }
+
 miscellaneous:Button{
     Name = "Remove Lighting Effects",
     Description = "Removing Annoying lighting effects like blind and myopic on the Client",
@@ -222,23 +283,17 @@ miscellaneous:Button{
         MainChannel:SendAsync(";clearinv others")
     end
 }
-miscellaneous:Textbox{
-    Name = "Clear Enlighten Name",
-    Callback = function(text)
-        _G.ClrEnlName = text
-    end
-}
-miscellaneous:Button{
-    Name = "Specific Clear Enlighte",
-    Description = "Clears enlighten from one specific player",
-    Callback = function()
-        MainChannel:SendAsync(";enlighten" .. " " .. _G.ClearEnlName)
-        wait(0.2)
-        MainChannel:SendAsync(";clearinv" .. " " .. _G.ClearEnlName)
-        wait(0.2)
-        MainChannel:SendAsync(";clearinv" .. " " .. _G.ClearEnlName)
-        wait(0.2)
-        MainChannel:SendAsync(";clearinv" .. " " .. _G.ClearEnlName)
+
+miscellaneous:Toggle{
+    Name = "Trigger Enlighten Clear",
+    StartingState = false,
+    Description = "Uses an alternative method to clear enligten (effective against other exploiters)",
+    Callback = function(state)
+        _G.TriggerClear = state
+        while _G.TriggerClear do
+            MainChannel:SendAsync(ChaosClear[math.random(1, 2)])
+            task.wait()
+        end
     end
 }
 miscellaneous:Button{
@@ -474,6 +529,43 @@ miscellaneous:Button{
     end
 }
 
+miscellaneous:Toggle{
+    Name = "Lock Player Position",
+    StartingState = false,
+    Description = "Locks the player position to 0, 50, 0",
+    Callback = function(state)
+        _G.LockedPosition = state
+        while _G.LockedPosition do
+            game.Players.LocalPlayer.Character:MoveTo(Vector3.new(0, 50, 0))
+            task.wait()
+        end
+    end
+}
+miscellaneous:Toggle{
+    Name = "Chaos",
+    StartingState = false,
+    Description = "probably destroys servers",
+    Callback = function(state)
+        _G.Chaos = state
+        MainChannel:SendAsync(";night")
+        wait(0.3)
+        MainChannel:SendAsync(";colorless")
+        wait(0.3)
+        MainChannel:SendAsync(";fog 9e9")
+        wait(0.3)
+        MainChannel:SendAsync(";delcubes a")
+        while _G.Chaos do
+            MainChannel:SendAsync(";" .. Breaker[math.random(1, 6)] .. " all")
+            task.wait(0.3)
+        end
+    end
+}
+morphs:Textbox{
+    Name = "Morph Target (leave blank for self)",
+    Callback = function(text)
+        _G.MorphTarget = text
+    end
+}
 morphs:Button{
     Name = "Blank",
     Description = "Turns you blank",
@@ -485,23 +577,25 @@ morphs:Button{
     Name = "Tiger Shark",
     Description = "Morphs you into a tiger shark",
     Callback = function()
-        MainChannel:SendAsync(";morph me Blank")
+        MainChannel:SendAsync(";morph " .. _G.MorphTarget ..  " Blank")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 17649531118")
+        MainChannel:SendAsync(";r6 " .. _G.MorphTarget)
         wait(morphWait)
-        MainChannel:SendAsync(";wear 17636708724")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 17649531118")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 17649513846")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 17636708724")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 88464072723276")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 17649513846")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 15291413794")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 88464072723276")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 15291386940")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 15291413794")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 15291386940")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 15291386940")
         wait(morphWait)
-        MainChannel:SendAsync("Name me TigerShark")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 15291386940")
+        wait(morphWait)
+        MainChannel:SendAsync("Name " .. _G.MorphTarget .. " TigerShark")
     end
 }
 
@@ -509,21 +603,23 @@ morphs:Button{
     Name = "Sand Shark",
     Description = "Morphs you into a sand shark",
     Callback = function()
-        MainChannel:SendAsync(";morph me Blank")
+        MainChannel:SendAsync(";morph " .. _G.MorphTarget .. " Blank")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 18112627731")
+        MainChannel:SendAsync(";r6 " .. _G.MorphTarget)
         wait(morphWait)
-        MainChannel:SendAsync(";wear 18112648974")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 18112627731")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 18112653888")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 18112648974")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 18112632794")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 18112653888")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 8912762012")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 18112632794")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 8912766688")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 8912762012")
         wait(morphWait)
-        MainChannel:SendAsync(";Name me SandShark")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 8912766688")
+        wait(morphWait)
+        MainChannel:SendAsync(";Name " .. _G.MorphTarget .. " SandShark")
     end
 }
 
@@ -531,25 +627,27 @@ morphs:Button{
     Name = "Kawaii Shark",
     Description = "Morphs you into a Pink Tiger Shark",
     Callback = function()
-        MainChannel:SendAsync(";morph me blank")
+        MainChannel:SendAsync(";morph " .. _G.MorphTarget .. " blank")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 18112587957")
+        MainChannel:SendAsync(";r6 " .. _G.MorphTarget)
         wait(morphWait)
-        MainChannel:SendAsync(";wear 18112607940")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 18112587957")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 17532055478")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 18112607940")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 18112587957")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 17532055478")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 13369529179")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 18112587957")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 18112612824")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 13369529179")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 6328302835")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 18112612824")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 6328543213")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 6328302835")
         wait(morphWait)
-        MainChannel:SendAsync(";name me KawaiiShark")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 6328543213")
+        wait(morphWait)
+        MainChannel:SendAsync(";name " .. _G.MorphTarget .. " KawaiiShark")
     end
 }
 
@@ -557,23 +655,25 @@ morphs:Button{
     Name = "Cone Shark",
     Description = "Morphs you into a Traffic Cone Shark",
     Callback = function()
-        MainChannel:SendAsync(";morph me blank")
+        MainChannel:SendAsync(";morph" .. _G.MorphTarget .. "blank")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 113522909306924")
+        MainChannel:SendAsync(";r6 " .. _G.MorphTarget)
         wait(morphWait)
-        MainChannel:SendAsync(";wear 109180592834305")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 113522909306924")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 86293764182581")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 109180592834305")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 93372255536999")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 86293764182581")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 95974462016249")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 93372255536999")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 140216773049817")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 95974462016249")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 136223225967034")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 140216773049817")
         wait(morphWait)
-        MainChannel:SendAsync(";name me Traffic_Cone_Shark")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 136223225967034")
+        wait(morphWait)
+        MainChannel:SendAsync(";name " .. _G.MorphTarget .. " Traffic_Cone_Shark")
     end
 }
 
@@ -581,62 +681,141 @@ morphs:Button{
     Name = "Demon Shark",
     Description = "Morphs you into a demon shark",
     Callback = function()
-        MainChannel:SendAsync(";morph me blank")
+        MainChannel:SendAsync(";morph " .. _G.MorphTarget .. " blank")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 92653248508321")
+        MainChannel:SendAsync(";r6 " .. _G.MorphTarget)
         wait(morphWait)
-        MainChannel:SendAsync(";wear 114535411154289")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 92653248508321")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 72881417259026")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 114535411154289")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 122195589834556")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 72881417259026")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 13580749682")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 122195589834556")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 13580746328")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 13580749682")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 13580749682")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 13580746328")
         wait(morphWait)
-        MainChannel:SendAsync(";Name me DemonShark")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 13580749682")
+        wait(morphWait)
+        MainChannel:SendAsync(";Name " .. _G.MorphTarget .. " DemonShark")
     end
 }
 
 morphs:Button{
     Name = "Blue Koi",
-    Description = "Morphs you into a japanese Blue Koi"
+    Description = "Morphs you into a japanese Blue Koi",
     Callback = function()
-        MainChannel:SendAsync(";morph me Blank")
+        MainChannel:SendAsync(";morph " .. _G.MorphTarget .. " Blank")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 80945728617076")
+        MainChannel:SendAsync(";r6 " .. _G.MorphTarget)
         wait(morphWait)
-        MainChannel:SendAsync(";wear 92493817603615")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 80945728617076")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 130550146575802")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 92493817603615")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 76892240019041")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 130550146575802")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 118948917431511")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 76892240019041")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 117094001435092")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 118948917431511")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 117094001435092")
+        wait(morphWait)
+        MainChannel:SendAsync(";Name " .. _G.MorphTarget .. " BlueKoi")
     end
 }
 
 morphs:Button{
     Name = "Red Koi",
-    Description = "Morphs you into a japanese Red Koi"
+    Description = "Morphs you into a japanese Red Koi",
     Callback = function()
-        MainChannel:SendAsync(";morph me Blank")
+        MainChannel:SendAsync(";morph " .. _G.MorphTarget .. " Blank")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 17701457534")
+        MainChannel:SendAsync(";r6 " .. _G.MorphTarget)
         wait(morphWait)
-        MainChannel:SendAsync(";wear 17701452014")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 17701457534")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 17701439976")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 17701452014")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 17701432554")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 17701439976")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 17718253134")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 17701432554")
         wait(morphWait)
-        MainChannel:SendAsync(";wear 17718248655")
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 17718253134")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 17718248655")
+        wait(morphWait)
+        MainChannel:SendAsync(";name " .. _G.MorphTarget .. " RedKoi")
     end
 }
+
+morphs:Button{
+    Name = "Snow Leopard",
+    Description = "Morphs you into a snow leopard",
+    Callback = function()
+        MainChannel:SendAsync(";morph " .. _G.MorphTarget .. " Blank")
+        wait(morphWait)
+        MainChannel:SendAsync(";r6 " .. _G.MorphTarget)
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 130120021117421")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 16492149811")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 6083789644")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 6083787435")
+        wait(morphWait)
+        MainChannel:SendAsync(";name " .. _G.MorphTarget .. " SnowLeopard")
+    end
+}
+
+morphs:Button{
+    Name = "Blue Kitsune",
+    Description = "Morphs you into a blue kitsune",
+    Callback = function()
+        MainChannel:SendAsync(";morph " .. _G.MorphTarget .. " Blank")
+        wait(morphWait)
+        MainChannel:SendAsync(";r6 " .. _G.MorphTarget)
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 85048130484059")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 17047658420")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 17047632343")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 12899889783")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 6778932781")
+        wait(morphWait)
+        MainChannel:SendAsync(";name " .. _G.MorphTarget .. " BlueKitsune")
+    end
+}
+
+morphs:Button{
+    Name = "Dark Dragon",
+    Description = "Morphs you into a dark dragon",
+    Callback = function()
+        MainChannel:SendAsync(";morph " .. _G.MorphTarget .. " Blank")
+        wait(morphWait)
+        MainChannel:SendAsync(";r6 " .. _G.MorphTarget)
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 13399195603")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 13379039707")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 13357870831")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 13357380633")
+        wait(morphWait)
+        MainChannel:SendAsync(";wear " .. _G.MorphTarget .. " 10435171005")
+        wait(morphWait)
+        MainChannel:SendAsync(";name " .. _G.MorphTarget .. " DarkDragon")
+    end
+}
+
+
+
+onCharacter(LocalPlayer.Character)
+LocalPlayer.CharacterAdded:Connect(onCharacter)
